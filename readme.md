@@ -21,9 +21,9 @@
 ## Install
 
 ```bash
-$ npm install @sinclair/typebox                     # 0.34.x
+$ npm install @sinclair/typebox                     # TypeBox-Legacy | 0.34.x
 
-$ npm install typebox                               # 1.0.x
+$ npm install typebox                               # TypeBox        | 1.0.x
 ```
 
 ## Example
