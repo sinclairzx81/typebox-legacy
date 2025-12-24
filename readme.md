@@ -4,7 +4,7 @@
 
 <p>Json Schema Type Builder with Static Type Resolution for TypeScript</p>
 
-<img src="https://raw.githubusercontent.com/sinclairzx81/typebox/refs/heads/master/typebox.png" />
+<img src="https://raw.githubusercontent.com/sinclairzx81/typebox-legacy/refs/heads/main/typebox.png" />
 
 <br />
 <br />
@@ -21,9 +21,9 @@
 ## Install
 
 ```bash
-$ npm install @sinclair/typebox                     # TypeBox-Legacy | 0.34.x
+$ npm install @sinclair/typebox                     # 0.34.x
 
-$ npm install typebox                               # TypeBox        | 1.0.x
+$ npm install typebox                               # 1.0.x
 ```
 
 ## Example
