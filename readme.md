@@ -4,7 +4,7 @@
 
 <p>Json Schema Type Builder with Static Type Resolution for TypeScript</p>
 
-<img src="https://raw.githubusercontent.com/sinclairzx81/typebox/refs/heads/master/typebox.png" />
+<img src="https://raw.githubusercontent.com/sinclairzx81/typebox-legacy/refs/heads/main/typebox.png" />
 
 <br />
 <br />
