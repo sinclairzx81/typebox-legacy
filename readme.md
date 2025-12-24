@@ -21,7 +21,9 @@
 ## Install
 
 ```bash
-$ npm install @sinclair/typebox --save
+$ npm install @sinclair/typebox                     # TypeBox-Legacy | 0.34.x
+
+$ npm install typebox                               # TypeBox        | 1.0.x
 ```
 
 ## Example
@@ -51,7 +53,7 @@ type T = Static<typeof T>                            // type T = {
 
 ## Overview
 
-> ⚠️ TypeBox versions (pre-1.0) continue active maintenance through 2026 and beyond. This repository services as the OIDC publishing environment for the `@sinclair/typebox` package scope on NPM. For TypeBox versions 1.0 and above, refer to https://github.com/sinclairzx81/typebox
+> ⚠️ TypeBox versions (pre-1.0) will continue active maintenance through 2026 and beyond. This repository services as the OIDC publishing environment for the `@sinclair/typebox` package scope on NPM. For TypeBox versions 1.0 and above, refer to https://github.com/sinclairzx81/typebox
 
 TypeBox is a runtime type builder that creates in-memory Json Schema objects that infer as TypeScript types. The schematics produced by this library are designed to match the static type checking rules of the TypeScript compiler. TypeBox offers a unified type that can be statically checked by TypeScript and runtime asserted using standard Json Schema validation.
 
