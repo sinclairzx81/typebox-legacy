@@ -1,6 +1,6 @@
 {
   "name": "@sinclair/typebox",
-  "version": "0.34.41",
+  "version": "0.34.42",
   "description": "Json Schema Type Builder with Static Type Resolution for TypeScript",
   "keywords": [
     "typescript",
@@ -12,7 +12,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sinclairzx81/typebox"
+    "url": "https://github.com/sinclairzx81/typebox-legacy"
   },
   "scripts": {
     "test:typescript": "hammer task test_typescript",

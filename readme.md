@@ -2,7 +2,7 @@
 
 <h1>TypeBox Legacy</h1>
 
-<p>OIDC Publishing for TypeBox Legacy</p>
+<p>Json Schema Type Builder with Static Type Resolution for TypeScript</p>
 
 <img src="https://raw.githubusercontent.com/sinclairzx81/typebox/refs/heads/master/typebox.png" />
 
@@ -51,7 +51,7 @@ type T = Static<typeof T>                            // type T = {
 
 ## Overview
 
-> ⚠️ This repository is the OIDC publishing environment for legacy TypeBox (pre-1.0 revisions). This project publishes to the `@sinclair/typebox` scope on NPM. For the versions 1.0 and above, visit https://github.com/sinclairzx81/typebox
+> ⚠️ TypeBox versions (pre-1.0) continue active maintenance through 2026 and beyond. This repository services as the OIDC publishing environment for the `@sinclair/typebox` package scope on NPM. For TypeBox versions 1.0 and above, refer to https://github.com/sinclairzx81/typebox
 
 TypeBox is a runtime type builder that creates in-memory Json Schema objects that infer as TypeScript types. The schematics produced by this library are designed to match the static type checking rules of the TypeScript compiler. TypeBox offers a unified type that can be statically checked by TypeScript and runtime asserted using standard Json Schema validation.
 
