@@ -1,6 +1,6 @@
 <div align='center'>
 
-<h1>TypeBox Legacy</h1>
+<h1>TypeBox 0.34.x</h1>
 
 <p>Json Schema Type Builder with Static Type Resolution for TypeScript</p>
 
