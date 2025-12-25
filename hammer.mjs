@@ -46,7 +46,7 @@ export async function test(filter = '') {
 export async function build(target = 'target/build') {
     await test()
     await folder(target).delete()
-    await shell(`tsgo -p ./src/tsconfig.json --outDir ${target}`)
+    await shell(`tsc -p ./src/tsconfig.json --outDir ${target}`)
     await folder(target).add('package.json')
     await folder(target).add('readme.md')
     await folder(target).add('license')
