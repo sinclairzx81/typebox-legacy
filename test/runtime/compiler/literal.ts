@@ -1,7 +1,7 @@
 import { Type } from '@sinclair/typebox'
 import { Ok, Fail } from './validate'
 
-describe('compiler/Literal', () => {
+describe('type/compiler/Literal', () => {
   it('Should validate literal number', () => {
     const T = Type.Literal(42)
     Ok(T, 42)
@@ -35,16 +35,5 @@ describe('compiler/Literal', () => {
     const T = Type.Union([Type.Literal(42), Type.Literal('hello')])
     Fail(T, 43)
     Fail(T, 'world')
-  })
-  // reference: https://github.com/sinclairzx81/typebox/issues/539
-  it('Should escape single quote literals', () => {
-    const T = Type.Literal("it's")
-    Ok(T, "it's")
-    Fail(T, "it''s")
-  })
-  it('Should escape multiple single quote literals', () => {
-    const T = Type.Literal("'''''''''")
-    Ok(T, "'''''''''")
-    Fail(T, "''''''''") // minus 1
   })
 })

@@ -1,7 +1,7 @@
 import { Type } from '@sinclair/typebox'
 import { Ok, Fail } from './validate'
 
-describe('compiler/TemplateLiteral', () => {
+describe('type/compiler/TemplateLiteral', () => {
   // --------------------------------------------------------
   // Finite
   // --------------------------------------------------------
@@ -130,6 +130,7 @@ describe('compiler/TemplateLiteral', () => {
     Ok(T, 'ccc')
     Ok(T, 'dddd')
   })
+
   it('Should validate infinite pattern 5', () => {
     // prettier-ignore
     const T = Type.TemplateLiteral([
@@ -181,29 +182,5 @@ describe('compiler/TemplateLiteral', () => {
     Ok(T, 'Accc')
     Ok(T, 'Adddd')
     Fail(T, 'X')
-  })
-  it('Should validate enum (implicit)', () => {
-    enum E {
-      A,
-      B,
-      C,
-    }
-    const T = Type.TemplateLiteral([Type.Literal('hello'), Type.Enum(E)])
-    Ok(T, 'hello0')
-    Ok(T, 'hello1')
-    Ok(T, 'hello2')
-    Fail(T, 'hello3')
-  })
-  it('Should validate enum (explicit)', () => {
-    enum E {
-      A,
-      B = 'B',
-      C = 'C',
-    }
-    const T = Type.TemplateLiteral([Type.Literal('hello'), Type.Enum(E)])
-    Ok(T, 'hello0')
-    Ok(T, 'helloB')
-    Ok(T, 'helloC')
-    Fail(T, 'helloD')
   })
 })

@@ -10,4 +10,4 @@ const C = Type.Constructor(
 
 const P = Type.ConstructorParameters(C)
 
-Expect(P).ToStatic<[number, string]>()
+Expect(P).ToInfer<[number, string]>()

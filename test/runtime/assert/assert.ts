@@ -1,36 +1,30 @@
 import * as assert from 'assert'
 
 export namespace Assert {
-  export function HasProperty<K extends PropertyKey>(value: unknown, key: K): asserts value is Record<K, unknown> {
-    if (typeof value === 'object' && value !== null && key in value) return
-    throw new Error(`Expected value to have property '${key as string}'`)
+  let port = 9000
+  /** Generates a new port used for host binding */
+  export function nextPort() {
+    const next = port++
+    return next
   }
-  export function IsTrue(value: boolean): asserts value is true {
-    return assert.strictEqual(value, true)
+  export function equal(actual: unknown, expect: unknown) {
+    return assert.strictEqual(actual, expect)
   }
-  export function IsFalse(value: boolean): asserts value is false {
-    return assert.strictEqual(value, false)
+  export function notEqual(actual: unknown, expect: unknown) {
+    return assert.notEqual(actual, expect)
   }
-  export function IsEqual(actual: unknown, expect: unknown) {
+  export function deepEqual(actual: unknown, expect: unknown) {
     if (actual instanceof Uint8Array && expect instanceof Uint8Array) {
       assert.equal(actual.length, expect.length)
       for (let i = 0; i < actual.length; i++) assert.equal(actual[i], expect[i])
     }
-    return assert.deepStrictEqual(actual, expect)
-  }
-  export function NotEqual(actual: unknown, expect: unknown) {
-    return assert.notEqual(actual, expect)
-  }
-  /** Asserts a numeric value is within range of the expected */
-  export function InRange(value: number, expect: number, range: number) {
-    if (Math.abs(value - expect) <= range) return
-    throw Error('Expected value to be in range')
+    return assert.deepEqual(actual, expect)
   }
   let nextIdOrdinal = 0
-  export function NextId() {
-    return `$id-${nextIdOrdinal++}`
+  export function nextId() {
+    return `nextID${nextIdOrdinal++}`
   }
-  export function Throws(callback: Function) {
+  export function throws(callback: Function) {
     try {
       callback()
     } catch {
@@ -38,7 +32,7 @@ export namespace Assert {
     }
     throw Error('Expected throw')
   }
-  export async function ThrowsAsync(callback: Function) {
+  export async function throwsAsync(callback: Function) {
     try {
       await callback()
     } catch {
@@ -46,12 +40,12 @@ export namespace Assert {
     }
     throw Error('Expected throw')
   }
-  export function IsInstanceOf<T extends new (...args: any[]) => any>(value: any, constructor: T): asserts value is InstanceType<T> {
-    if (value instanceof constructor) return
-    throw Error(`Value is not instance of ${constructor}`)
-  }
-  export function IsTypeOf<T extends 'string' | 'boolean' | 'number' | 'bigint' | 'symbol' | 'object' | 'function'>(value: any, type: T) {
+  export function isTypeOf(value: any, type: any) {
     if (typeof value === type) return
     throw Error(`Value is not typeof ${type}`)
+  }
+  export function isInstanceOf(value: any, constructor: any) {
+    if (value instanceof constructor) return
+    throw Error(`Value is not instance of ${constructor}`)
   }
 }

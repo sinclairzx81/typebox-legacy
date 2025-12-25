@@ -1,7 +1,7 @@
 import { Type } from '@sinclair/typebox'
 import { Ok, Fail } from './validate'
 
-describe('compiler/Composite', () => {
+describe('type/compiler/Composite', () => {
   it('Should compose two objects', () => {
     const A = Type.Object({ a: Type.String() })
     const B = Type.Object({ b: Type.Number() })
@@ -80,22 +80,5 @@ describe('compiler/Composite', () => {
     Ok(T, { x: { x: 1 }, y: { x: '' } })
     Fail(T, { x: { x: '1' }, y: { x: '' } })
     Fail(T, { x: { x: 1 }, y: { x: 1 } })
-  })
-  // prettier-ignore
-  it('Should composite intersection', () => {
-    const T = Type.Composite([
-      Type.Intersect([
-        Type.Object({ x: Type.Number() })
-      ]),
-      Type.Intersect([
-        Type.Object({ y: Type.Number() })
-      ]),
-      Type.Intersect([
-        Type.Object({ z: Type.Number() })
-      ]),
-    ])
-    Ok(T, { x: 1, y: 2, z: 3 })
-    Fail(T, { x: 1, y: 2, z: '3' })
-    Fail(T, { x: 1, y: 2 })
   })
 })

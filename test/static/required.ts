@@ -1,6 +1,8 @@
 import { Expect } from './assert'
 import { Type, Static } from '@sinclair/typebox'
-import * as Types from '@sinclair/typebox'
+
+Expect(Type.RegEx(/foo/)).ToInfer<string>()
+
 {
   const T = Type.Required(
     Type.Object({
@@ -12,7 +14,7 @@ import * as Types from '@sinclair/typebox'
 
   type T = Static<typeof T>
 
-  Expect(T).ToStatic<{
+  Expect(T).ToInfer<{
     A: string
     B: string
     C: string
@@ -33,7 +35,7 @@ import * as Types from '@sinclair/typebox'
 
     const P = Type.Partial(T)
 
-    Expect(P).ToStatic<
+    Expect(P).ToInfer<
       (
         | {
             type?: 'A' | undefined
@@ -53,7 +55,7 @@ import * as Types from '@sinclair/typebox'
 
     const R = Type.Required(P)
 
-    Expect(R).ToStatic<
+    Expect(R).ToInfer<
       (
         | {
             type: 'A'
@@ -71,37 +73,4 @@ import * as Types from '@sinclair/typebox'
       }
     >()
   }
-}
-{
-  // https://github.com/sinclairzx81/typebox/issues/655
-  const T = Type.Object({
-    a: Type.ReadonlyOptional(Type.Number()),
-    b: Type.Readonly(Type.Number()),
-    c: Type.Optional(Type.Number()),
-    d: Type.Number(),
-  })
-  const R: Types.TObject<{
-    a: Types.TReadonly<Types.TNumber>
-    b: Types.TReadonly<Types.TNumber>
-    c: Types.TNumber
-    d: Types.TNumber
-  }> = Type.Required(T)
-}
-// ------------------------------------------------------------------
-// Intrinsic Passthough
-// https://github.com/sinclairzx81/typebox/issues/1169
-// ------------------------------------------------------------------
-// prettier-ignore
-{
-  const T = Type.Required(Type.Union([Type.Number(), Type.Object({
-    x: Type.Optional(Type.Number())
-  })]))
-  Expect(T).ToStatic<number | { x: number }>
-}
-// prettier-ignore
-{
-  const T = Type.Required(Type.Union([Type.Literal(1), Type.Object({
-    x: Type.Optional(Type.Number())
-  })]))
-  Expect(T).ToStatic<1 | { x: number }>
 }

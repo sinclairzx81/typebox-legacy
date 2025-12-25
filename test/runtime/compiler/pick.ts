@@ -2,7 +2,7 @@ import { Type } from '@sinclair/typebox'
 import { Ok, Fail } from './validate'
 import { strictEqual } from 'assert'
 
-describe('compiler/Pick', () => {
+describe('type/compiler/Pick', () => {
   it('Should pick properties from the source schema', () => {
     const Vector3 = Type.Object(
       {
@@ -15,6 +15,7 @@ describe('compiler/Pick', () => {
     const T = Type.Pick(Vector3, ['x', 'y'])
     Ok(T, { x: 1, y: 1 })
   })
+
   it('Should remove required properties on the target schema', () => {
     const A = Type.Object(
       {
@@ -27,6 +28,7 @@ describe('compiler/Pick', () => {
     const T = Type.Pick(A, ['x', 'y'])
     strictEqual(T.required!.includes('z'), false)
   })
+
   it('Should inherit options from the source object', () => {
     const A = Type.Object(
       {
@@ -56,26 +58,28 @@ describe('compiler/Pick', () => {
     Fail(T, { x: 0, y: 0, z: 0 })
   })
   it('Should support Pick of Literal', () => {
-    const A = Type.Object({
-      x: Type.Number(),
-      y: Type.Number(),
-      z: Type.Number(),
-    })
-    const T = Type.Pick(A, Type.Literal('x'), {
-      additionalProperties: false,
-    })
+    const A = Type.Object(
+      {
+        x: Type.Number(),
+        y: Type.Number(),
+        z: Type.Number(),
+      },
+      { additionalProperties: false },
+    )
+    const T = Type.Pick(A, Type.Literal('x'))
     Ok(T, { x: 1 })
     Fail(T, { x: 1, y: 1, z: 1 })
   })
   it('Should support Pick of Never', () => {
-    const A = Type.Object({
-      x: Type.Number(),
-      y: Type.Number(),
-      z: Type.Number(),
-    })
-    const T = Type.Pick(A, Type.Never(), {
-      additionalProperties: false,
-    })
+    const A = Type.Object(
+      {
+        x: Type.Number(),
+        y: Type.Number(),
+        z: Type.Number(),
+      },
+      { additionalProperties: false },
+    )
+    const T = Type.Pick(A, Type.Never())
     Fail(T, { x: 1, y: 1, z: 1 })
     Ok(T, {})
   })

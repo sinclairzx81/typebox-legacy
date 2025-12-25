@@ -6,10 +6,10 @@ describe('value/convert/Undefined', () => {
   const T = Type.Undefined()
   it('Should convert from string 1', () => {
     const R = Value.Convert(T, 'undefined')
-    Assert.IsEqual(R, undefined)
+    Assert.deepEqual(R, undefined)
   })
   it('Should convert from string 2', () => {
     const R = Value.Convert(T, 'hello')
-    Assert.IsEqual(R, 'hello')
+    Assert.deepEqual(R, 'hello')
   })
 })

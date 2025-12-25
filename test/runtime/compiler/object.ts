@@ -1,34 +1,7 @@
 import { Type } from '@sinclair/typebox'
 import { Ok, Fail } from './validate'
 
-describe('compiler/Object', () => {
-  // -----------------------------------------------------
-  // TypeCompiler Only
-  // -----------------------------------------------------
-  it('Should handle extends undefined check 1', () => {
-    const T = Type.Object({
-      A: Type.Not(Type.Number()),
-      B: Type.Union([Type.Number(), Type.Undefined()]),
-      C: Type.Intersect([Type.Undefined(), Type.Undefined()]),
-    })
-    Ok(T, {
-      A: undefined,
-      B: undefined,
-      C: undefined,
-    })
-  })
-  // https://github.com/sinclairzx81/typebox/issues/437
-  it('Should handle extends undefined check 2', () => {
-    const T = Type.Object({
-      A: Type.Not(Type.Null()),
-    })
-    Ok(T, { A: undefined })
-    Fail(T, { A: null })
-    Fail(T, {})
-  })
-  // -----------------------------------------------------
-  // Standard Checks
-  // -----------------------------------------------------
+describe('type/compiler/Object', () => {
   it('Should not validate a number', () => {
     const T = Type.Object({})
     Fail(T, 42)
@@ -242,89 +215,6 @@ describe('compiler/Object', () => {
       z: 3,
     })
   })
-  it('Should validate nested schema additional properties of string', () => {
-    const T = Type.Object({
-      nested: Type.Object(
-        {
-          x: Type.Number(),
-          y: Type.Number(),
-        },
-        {
-          additionalProperties: Type.String(),
-        },
-      ),
-    })
-    Ok(T, {
-      nested: {
-        x: 1,
-        y: 2,
-        z: 'hello',
-      },
-    })
-    Fail(T, {
-      nested: {
-        x: 1,
-        y: 2,
-        z: 3,
-      },
-    })
-  })
-  it('Should validate nested schema additional properties of array', () => {
-    const T = Type.Object({
-      nested: Type.Object(
-        {
-          x: Type.Number(),
-          y: Type.Number(),
-        },
-        {
-          additionalProperties: Type.Array(Type.Number()),
-        },
-      ),
-    })
-    Ok(T, {
-      nested: {
-        x: 1,
-        y: 2,
-        z: [0, 1, 2],
-      },
-    })
-    Fail(T, {
-      nested: {
-        x: 1,
-        y: 2,
-        z: 3,
-      },
-    })
-  })
-  it('Should validate nested schema additional properties of object', () => {
-    const T = Type.Object({
-      nested: Type.Object(
-        {
-          x: Type.Number(),
-          y: Type.Number(),
-        },
-        {
-          additionalProperties: Type.Object({
-            z: Type.Number(),
-          }),
-        },
-      ),
-    })
-    Ok(T, {
-      nested: {
-        x: 1,
-        y: 2,
-        z: { z: 1 },
-      },
-    })
-    Fail(T, {
-      nested: {
-        x: 1,
-        y: 2,
-        z: 3,
-      },
-    })
-  })
   it('Should check for property key if property type is undefined', () => {
     const T = Type.Object({ x: Type.Undefined() })
     Ok(T, { x: undefined })
@@ -358,33 +248,5 @@ describe('compiler/Object', () => {
     Fail(T, { x: 1 })
     Ok(T, { x: undefined })
     Ok(T, {})
-  })
-  it('Should check for required property of any', () => {
-    const T = Type.Object({ x: Type.Any() })
-    Fail(T, {})
-    Ok(T, { x: undefined })
-    Ok(T, { x: 1 })
-    Ok(T, { x: true })
-  })
-  it('Should check for required property of unknown', () => {
-    const T = Type.Object({ x: Type.Unknown() })
-    Fail(T, {})
-    Ok(T, { x: undefined })
-    Ok(T, { x: 1 })
-    Ok(T, { x: true })
-  })
-  it('Should check for required property of any (when optional)', () => {
-    const T = Type.Object({ x: Type.Optional(Type.Any()) })
-    Ok(T, {})
-    Ok(T, { x: undefined })
-    Ok(T, { x: 1 })
-    Ok(T, { x: true })
-  })
-  it('Should check for required property of unknown (when optional)', () => {
-    const T = Type.Object({ x: Type.Optional(Type.Unknown()) })
-    Ok(T, {})
-    Ok(T, { x: undefined })
-    Ok(T, { x: 1 })
-    Ok(T, { x: true })
   })
 })

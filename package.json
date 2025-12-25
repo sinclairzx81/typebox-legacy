@@ -1,7 +1,7 @@
 {
   "name": "@sinclair/typebox",
-  "version": "0.34.45",
-  "description": "Json Schema Type Builder with Static Type Resolution for TypeScript",
+  "version": "0.27.8",
+  "description": "JSONSchema Type Builder with Static Type Resolution for TypeScript",
   "keywords": [
     "typescript",
     "json-schema",
@@ -10,35 +10,41 @@
   ],
   "author": "sinclairzx81",
   "license": "MIT",
-  "homepage": "https://github.com/sinclairzx81/typebox-legacy",
+  "main": "./typebox.js",
+  "types": "./typebox.d.ts",
+  "exports": {
+    "./compiler": "./compiler/index.js",
+    "./errors": "./errors/index.js",
+    "./system": "./system/index.js",
+    "./value": "./value/index.js",
+    ".": "./typebox.js"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sinclairzx81/typebox-legacy"
+    "url": "https://github.com/sinclairzx81/typebox"
   },
   "scripts": {
-    "test:typescript": "hammer task test_typescript",
-    "test:static": "hammer task test_static",
-    "test:runtime": "hammer task test_runtime",
-    "install:local": "hammer task install_local",
-    "benchmark": "hammer task benchmark",
-    "build:to": "hammer task build_to",
-    "build": "hammer task build",
-    "test": "hammer task test",
     "clean": "hammer task clean",
     "format": "hammer task format",
     "start": "hammer task start",
-    "publish": "hammer task publish",
-    "publish:dev": "hammer task publish_dev"
+    "test": "hammer task test",
+    "benchmark": "hammer task benchmark",
+    "build": "hammer task build",
+    "publish": "hammer task publish"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.13.2",
-    "@sinclair/hammer": "^0.18.0",
+    "@sinclair/hammer": "^0.17.1",
+    "@types/chai": "^4.3.3",
     "@types/mocha": "^9.1.1",
-    "@types/node": "^22.13.5",
+    "@types/node": "^25.0.3",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
-    "mocha": "^11.1.0",
+    "chai": "^4.3.6",
+    "mocha": "^9.2.2",
     "prettier": "^2.7.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.0.2"
+  },
+  "dependencies": {
+    "@typescript/native-preview": "^7.0.0-dev.20251223.1"
   }
 }

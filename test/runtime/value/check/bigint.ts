@@ -7,35 +7,38 @@ describe('value/check/BigInt', () => {
   it('Should not validate NaN', () => {
     const T = Type.BigInt()
     const result = Value.Check(T, NaN)
-    Assert.IsEqual(result, false)
+    Assert.equal(result, false)
   })
   it('Should not validate +Infinity', () => {
     const T = Type.BigInt()
     const result = Value.Check(T, Infinity)
-    Assert.IsEqual(result, false)
+    Assert.equal(result, false)
   })
   it('Should not validate -Infinity', () => {
     const T = Type.BigInt()
     const result = Value.Check(T, -Infinity)
-    Assert.IsEqual(result, false)
+    Assert.equal(result, false)
   })
   it('Should fail integer', () => {
     const value = 1
     const result = Value.Check(T, value)
-    Assert.IsEqual(result, false)
+    Assert.equal(result, false)
   })
+
   it('Should fail integer', () => {
     const value = 3.14
     const result = Value.Check(T, value)
-    Assert.IsEqual(result, false)
+    Assert.equal(result, false)
   })
+
   it('Should fail Date', () => {
     const value = new Date()
     const result = Value.Check(T, value)
-    Assert.IsEqual(result, false)
+    Assert.equal(result, false)
   })
+
   it('Should pass bigint', () => {
     const result = Value.Check(T, BigInt(0))
-    Assert.IsEqual(result, true)
+    Assert.equal(result, true)
   })
 })

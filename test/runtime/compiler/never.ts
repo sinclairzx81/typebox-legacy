@@ -1,7 +1,7 @@
 import { Type } from '@sinclair/typebox'
 import { Fail } from './validate'
 
-describe('compiler/Never', () => {
+describe('type/compiler/Never', () => {
   it('Should not validate number', () => {
     const T = Type.Never()
     Fail(T, 1)

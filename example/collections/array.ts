@@ -4,7 +4,7 @@
 
 The MIT License (MIT)
 
-Copyright (c) 2017-2025 Haydn Paterson (sinclair) <haydn.developer@gmail.com>
+Copyright (c) 2017-2023 Haydn Paterson (sinclair) <haydn.developer@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,28 +27,32 @@ THE SOFTWARE.
 ---------------------------------------------------------------------------*/
 
 import { TypeCheck, TypeCompiler, ValueError } from '@sinclair/typebox/compiler'
-import { TSchema, Static, TypeBoxError } from '@sinclair/typebox'
+import { TSchema, Static } from '@sinclair/typebox'
 import { Value } from '@sinclair/typebox/value'
 
 // ----------------------------------------------------------------
 // TypeArrayError
 // ----------------------------------------------------------------
-export class TypeArrayError extends TypeBoxError {
+
+export class TypeArrayError extends Error {
   constructor(message: string) {
     super(`${message}`)
   }
 }
-export class TypeArrayLengthError extends TypeBoxError {
+export class TypeArrayLengthError extends Error {
   constructor() {
     super('arrayLength not a number')
   }
 }
+
 // ----------------------------------------------------------------
 // TypeArray<T>
 // ----------------------------------------------------------------
+
 export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
   readonly #typeCheck: TypeCheck<T>
   readonly #values: Static<T>[]
+
   constructor(schema: T, arrayLength: number = 0) {
     if (typeof arrayLength !== 'number') throw new TypeArrayLengthError()
     this.#typeCheck = TypeCompiler.Compile(schema)
@@ -57,27 +61,33 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
       this.#values[i] = Value.Create(schema)
     }
   }
+
   // ---------------------------------------------------
   // Indexer
   // ---------------------------------------------------
+
   /** Sets the value at the given index */
   public set(index: number, item: Static<T>): void {
     this.#assertIndexInBounds(index)
     this.#assertItem(index, item)
     this.#values[index] = item
   }
+
   // ---------------------------------------------------
   // Array<T>
   // ---------------------------------------------------
+
   /** Iterator for values in this array */
   public [Symbol.iterator](): IterableIterator<Static<T>> {
     return this.#values[Symbol.iterator]() as IterableIterator<T>
   }
+
   /** Gets the value at the given index */
   public at(index: number): Static<T> {
     this.#assertIndexInBounds(index)
     return this.#values[index] as T
   }
+
   /**
    * Gets the length of the array. This is a number one higher than the highest index in the array.
    */
@@ -96,6 +106,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
   public toLocaleString(): string {
     return this.#values.toLocaleString()
   }
+
   /**
    * Removes the last element from an array and returns it.
    * If the array is empty, undefined is returned and the array is not modified.
@@ -117,6 +128,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
    * @param items Additional arrays and/or items to add to the end of the array.
    */
   public concat(...items: ConcatArray<Static<T>>[]): Static<T>[]
+
   /**
    * Combines two or more arrays.
    * This method returns a new array without modifying any existing arrays.
@@ -126,6 +138,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
     this.#assertItems(items)
     return this.#values.concat(...items) as Static<T>[]
   }
+
   /**
    * Adds all the elements of an array into a string, separated by the specified separator string.
    * @param separator A string used to separate one element of the array from the next in the resulting string. If omitted, the array elements are separated with a comma.
@@ -147,6 +160,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
   public shift(): Static<T> | undefined {
     return this.#values.shift() as Static<T> | undefined
   }
+
   /**
    * Returns a copy of a section of an array.
    * For both start and end, a negative index can be used to indicate an offset from the end of the array.
@@ -159,6 +173,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
   public slice(start?: number, end?: number): Static<T>[] {
     return this.#values.slice(start, end) as Static<T>[]
   }
+
   /**
    * Sorts an array in place.
    * This method mutates the array and returns a reference to the same array.
@@ -173,6 +188,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
     this.#values.sort(compareFn as any)
     return this
   }
+
   /**
    * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
    * @param start The zero-based location in the array from which to start removing elements.
@@ -180,6 +196,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
    * @returns An array containing the elements that were deleted.
    */
   public splice(start: number, deleteCount?: number): Static<T>[]
+
   /**
    * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
    * @param start The zero-based location in the array from which to start removing elements.
@@ -191,6 +208,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
     this.#assertItems(items)
     return this.#values.splice(start, deleteCount, items) as Static<T>[]
   }
+
   /**
    * Inserts new elements at the start of an array, and returns the new length of the array.
    * @param items Elements to insert at the start of the array.
@@ -199,6 +217,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
     this.#assertItems(items)
     return this.#values.unshift(items)
   }
+
   /**
    * Returns the index of the first occurrence of a value in an array, or -1 if it is not present.
    * @param searchElement The value to locate in the array.
@@ -207,6 +226,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
   public indexOf(searchElement: Static<T>, fromIndex?: number): number {
     return this.#values.indexOf(searchElement, fromIndex)
   }
+
   /**
    * Returns the index of the last occurrence of a specified value in an array, or -1 if it is not present.
    * @param searchElement The value to locate in the array.
@@ -215,6 +235,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
   public lastIndexOf(searchElement: Static<T>, fromIndex?: number): number {
     return this.#values.lastIndexOf(searchElement, fromIndex)
   }
+
   /**
    * Determines whether all the members of an array satisfy the specified test.
    * @param predicate A function that accepts up to three arguments. The every method calls
@@ -224,6 +245,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
    * If thisArg is omitted, undefined is used as the this value.
    */
   public every<S extends T>(predicate: (value: Static<T>, index: number, array: Static<T>[]) => value is Static<S>, thisArg?: any): this is Static<S>[]
+
   /**
    * Determines whether all the members of an array satisfy the specified test.
    * @param predicate A function that accepts up to three arguments. The every method calls
@@ -235,6 +257,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
   public every(predicate: (value: Static<T>, index: number, array: Static<T>[]) => unknown, thisArg?: any): boolean {
     return this.#values.every(predicate as any, thisArg)
   }
+
   /**
    * Determines whether the specified callback function returns true for any element of an array.
    * @param predicate A function that accepts up to three arguments. The some method calls
@@ -246,6 +269,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
   public some(predicate: (value: Static<T>, index: number, array: T[]) => unknown, thisArg?: any): boolean {
     return this.#values.some(predicate as any, thisArg)
   }
+
   /**
    * Performs the specified action for each element in an array.
    * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
@@ -262,6 +286,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
   public map<U>(callbackfn: (value: Static<T>, index: number, array: Static<T>[]) => U, thisArg?: any): U[] {
     return this.#values.map(callbackfn as any, thisArg)
   }
+
   /**
    * Returns the elements of an array that meet the condition specified in a callback function.
    * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
@@ -277,6 +302,7 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
   public filter(predicate: any, thisArg: any): any {
     return this.#values.filter(predicate as any, thisArg)
   }
+
   /**
    * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
    * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.
@@ -309,9 +335,11 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
   public reduceRight(callbackfn: any, initialValue?: any): any {
     return this.#values.reduceRight(callbackfn, initialValue)
   }
+
   // ---------------------------------------------------
   // Assertions
   // ---------------------------------------------------
+
   #formatError(errors: ValueError[]) {
     return errors.map((error) => `${error.message} ${error.path}`).join('. ')
   }
@@ -320,18 +348,21 @@ export class TypeArray<T extends TSchema> implements Iterable<Static<T>> {
     if (index >= 0 && index < this.#values.length) return
     throw new TypeArrayError(`Index ${index} is outside the bounds of this Array.`)
   }
+
   /** Asserts the given values */
   #assertItem(index: number, item: unknown): asserts item is Static<T> {
     if (this.#typeCheck.Check(item)) return
     const message = this.#formatError([...this.#typeCheck.Errors(item)])
     throw new TypeArrayError(`Item at Index ${index} is invalid. ${message}`)
   }
+
   /** Asserts the given values */
   #assertItems(items: unknown[]): asserts items is Static<T>[] {
     for (let i = 0; i < items.length; i++) {
       this.#assertItem(i, items[i])
     }
   }
+
   /** Creates a typed array from an existing array */
   public static from<T extends TSchema>(schema: T, iterable: IterableIterator<Static<T>> | Array<Static<T>>): TypeArray<T> {
     if (globalThis.Array.isArray(iterable)) {

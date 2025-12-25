@@ -3,5 +3,5 @@ import { Type } from '@sinclair/typebox'
 
 {
   const T = Type.Never()
-  Expect(T).ToStaticNever()
+  Expect(T).ToInfer<never>()
 }

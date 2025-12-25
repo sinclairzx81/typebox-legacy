@@ -7,12 +7,13 @@ describe('value/create/Function', () => {
     const T = Type.Function([], Type.Number({ default: 123 }))
     const F = Value.Create(T)
     const R = F()
-    Assert.IsEqual(R, 123)
+    Assert.deepEqual(R, 123)
   })
+
   it('Should create default', () => {
-    const T = Type.Function([], Type.Number({ default: 123 }), { default: () => () => 321 })
+    const T = Type.Function([], Type.Number({ default: 123 }), { default: () => 321 })
     const F = Value.Create(T)
     const R = F()
-    Assert.IsEqual(R, 321)
+    Assert.deepEqual(R, 321)
   })
 })

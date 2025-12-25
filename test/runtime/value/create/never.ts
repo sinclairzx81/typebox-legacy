@@ -5,6 +5,6 @@ import { Assert } from '../../assert/index'
 describe('value/create/Never', () => {
   it('Should create value', () => {
     const T = Type.Never()
-    Assert.Throws(() => Value.Create(T))
+    Assert.throws(() => Value.Create(T))
   })
 })

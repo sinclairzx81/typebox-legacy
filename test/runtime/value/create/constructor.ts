@@ -13,8 +13,9 @@ describe('value/create/Constructor', () => {
     const C = Value.Create(T)
     const I = new C()
     const R = I.test()
-    Assert.IsEqual(R, 123)
+    Assert.deepEqual(R, 123)
   })
+
   it('Should create default', () => {
     const T = Type.Constructor(
       [],
@@ -22,17 +23,16 @@ describe('value/create/Constructor', () => {
         test: Type.Function([], Type.Number({ default: 123 })),
       }),
       {
-        default: () =>
-          class {
-            test() {
-              return 321
-            }
-          },
+        default: class {
+          test() {
+            return 321
+          }
+        },
       },
     )
     const C = Value.Create(T)
     const I = new C()
     const R = I.test()
-    Assert.IsEqual(R, 321)
+    Assert.deepEqual(R, 321)
   })
 })

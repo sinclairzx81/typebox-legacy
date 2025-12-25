@@ -1,5 +1,5 @@
-import { Static, Type } from '@sinclair/typebox'
 import { Expect } from './assert'
+import { Type, Static } from '@sinclair/typebox'
 
 {
   // identity
@@ -10,7 +10,7 @@ import { Expect } from './assert'
     }),
   )
   type T = Static<typeof R>
-  Expect(R).ToStatic<{ id: string; nodes: T[] }>()
+  Expect(R).ToInfer<{ id: string; nodes: T[] }>()
 }
 {
   // keyof
@@ -21,7 +21,7 @@ import { Expect } from './assert'
     }),
   )
   const T = Type.KeyOf(R)
-  Expect(T).ToStatic<'id' | 'nodes'>()
+  Expect(T).ToInfer<'id' | 'nodes'>()
 }
 {
   // partial
@@ -32,9 +32,9 @@ import { Expect } from './assert'
     }),
   )
   const T = Type.Partial(R)
-  Expect(T).ToStatic<{
-    id?: string | undefined
-    nodes?: Static<typeof T>[] | undefined
+  Expect(T).ToInfer<{
+    id: string | undefined
+    nodes: Static<typeof T>[] | undefined
   }>()
 }
 {
@@ -47,7 +47,7 @@ import { Expect } from './assert'
   )
   const P = Type.Partial(R)
   const T = Type.Required(P)
-  Expect(T).ToStatic<{
+  Expect(T).ToInfer<{
     id: string
     nodes: Static<typeof T>[]
   }>()
@@ -61,7 +61,7 @@ import { Expect } from './assert'
     }),
   )
   const T = Type.Pick(R, ['id'])
-  Expect(T).ToStatic<{
+  Expect(T).ToInfer<{
     id: string
   }>()
 }
@@ -74,27 +74,7 @@ import { Expect } from './assert'
     }),
   )
   const T = Type.Omit(R, ['id'])
-  Expect(T).ToStatic<{
+  Expect(T).ToInfer<{
     nodes: Static<typeof T>[]
   }>()
-}
-// prettier-ignore
-{
-  // issue: https://github.com/sinclairzx81/typebox/issues/336
-  type JSONValue = 
-    | string 
-    | number 
-    | null 
-    | boolean 
-    | { [x: string]: JSONValue } 
-    | JSONValue[]
-  const R = Type.Recursive((Node) => Type.Union([
-    Type.Null(), 
-    Type.String(), 
-    Type.Number(), 
-    Type.Boolean(), 
-    Type.Record(Type.String(), Node), 
-    Type.Array(Node)
-  ]))
-  Expect(R).ToStatic<JSONValue>()
 }

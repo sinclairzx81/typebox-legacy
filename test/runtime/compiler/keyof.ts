@@ -1,7 +1,8 @@
 import { Type } from '@sinclair/typebox'
 import { Ok, Fail } from './validate'
+import { strictEqual } from 'assert'
 
-describe('compiler/KeyOf', () => {
+describe('type/compiler/KeyOf', () => {
   it('Should validate with all object keys as a kind of union', () => {
     const T = Type.KeyOf(
       Type.Object({
@@ -15,6 +16,7 @@ describe('compiler/KeyOf', () => {
     Ok(T, 'z')
     Fail(T, 'w')
   })
+
   it('Should validate when using pick', () => {
     const T = Type.KeyOf(
       Type.Pick(
@@ -30,6 +32,7 @@ describe('compiler/KeyOf', () => {
     Ok(T, 'y')
     Fail(T, 'z')
   })
+
   it('Should validate when using omit', () => {
     const T = Type.KeyOf(
       Type.Omit(
@@ -41,6 +44,7 @@ describe('compiler/KeyOf', () => {
         ['x', 'y'],
       ),
     )
+
     Fail(T, 'x')
     Fail(T, 'y')
     Ok(T, 'z')

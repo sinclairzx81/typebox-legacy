@@ -6,7 +6,7 @@ import { Type, Static } from '@sinclair/typebox'
 
   type T = Static<typeof T>
 
-  Expect(T).ToStatic<string>()
+  Expect(T).ToInfer<string>()
 }
 
 {
@@ -14,5 +14,5 @@ import { Type, Static } from '@sinclair/typebox'
 
   type T = Static<typeof T>
 
-  Expect(T).ToStatic<number>()
+  Expect(T).ToInfer<number>()
 }

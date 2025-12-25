@@ -1,7 +1,7 @@
 import { Type } from '@sinclair/typebox'
 import { Ok } from './validate'
 
-describe('compiler/Unicode', () => {
+describe('type/compiler/Unicode', () => {
   // ---------------------------------------------------------
   // Identifiers
   // ---------------------------------------------------------
@@ -31,7 +31,7 @@ describe('compiler/Unicode', () => {
       },
     )
     const T = Type.Object({
-      vector: Type.Ref(R.$id!),
+      vector: Type.Ref(R),
     })
     Ok(
       T,

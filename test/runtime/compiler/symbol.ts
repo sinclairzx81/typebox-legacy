@@ -1,7 +1,7 @@
 import { Type } from '@sinclair/typebox'
 import { Ok, Fail } from './validate'
 
-describe('compiler/Symbol', () => {
+describe('type/compiler/Symbol', () => {
   it('Should not validate a boolean', () => {
     const T = Type.Symbol()
     Fail(T, true)

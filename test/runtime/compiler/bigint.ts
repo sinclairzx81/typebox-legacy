@@ -1,7 +1,7 @@
 import { Type } from '@sinclair/typebox'
 import { Ok, Fail } from './validate'
 
-describe('compiler/BigInt', () => {
+describe('type/compiler/BigInt', () => {
   it('Should not validate number', () => {
     const T = Type.BigInt()
     Fail(T, 3.14)
@@ -59,21 +59,25 @@ describe('compiler/BigInt', () => {
     Fail(T, BigInt(9))
     Ok(T, BigInt(10))
   })
+
   it('Should validate maximum', () => {
     const T = Type.BigInt({ maximum: BigInt(10) })
     Ok(T, BigInt(10))
     Fail(T, BigInt(11))
   })
+
   it('Should validate Date exclusiveMinimum', () => {
     const T = Type.BigInt({ exclusiveMinimum: BigInt(10) })
     Fail(T, BigInt(10))
     Ok(T, BigInt(11))
   })
+
   it('Should validate Date exclusiveMaximum', () => {
     const T = Type.BigInt({ exclusiveMaximum: BigInt(10) })
     Ok(T, BigInt(9))
     Fail(T, BigInt(10))
   })
+
   it('Should not validate NaN', () => {
     Fail(Type.Number(), NaN)
   })

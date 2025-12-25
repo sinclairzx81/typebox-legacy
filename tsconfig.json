@@ -1,18 +1,27 @@
 {
   "compilerOptions": {
     "strict": true,
-    "target": "ES2020",
-    "module": "Node16",
-    "moduleResolution": "Node16",
+    "target": "ESNEXT",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "declaration": true,
+    "skipLibCheck": true,
     "paths": {
-      "@sinclair/typebox/compiler": ["./src/compiler/index.ts"],
-      "@sinclair/typebox/errors": ["./src/errors/index.ts"],
-      "@sinclair/typebox/parser": ["./src/parser/index.ts"],
-      "@sinclair/typebox/syntax": ["./src/syntax/index.ts"],
-      "@sinclair/typebox/system": ["./src/system/index.ts"],
-      "@sinclair/typebox/type": ["./src/type/index.ts"],
-      "@sinclair/typebox/value": ["./src/value/index.ts"],
-      "@sinclair/typebox": ["./src/index.ts"],
+      "@sinclair/typebox/compiler": [
+        "./src/compiler/index.ts"
+      ],
+      "@sinclair/typebox/errors": [
+        "./src/errors/index.ts"
+      ],
+      "@sinclair/typebox/system": [
+        "./src/system/index.ts"
+      ],
+      "@sinclair/typebox/value": [
+        "./src/value/index.ts"
+      ],
+      "@sinclair/typebox": [
+        "./src/typebox.ts"
+      ],
     }
   }
 }

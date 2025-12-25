@@ -13,42 +13,42 @@ describe('value/cast/Recursive', () => {
   it('Should upcast from string', () => {
     const value = 'hello'
     const result = Value.Cast(T, value)
-    Assert.IsEqual(result, E)
+    Assert.deepEqual(result, E)
   })
   it('Should upcast from number', () => {
     const value = E
     const result = Value.Cast(T, value)
-    Assert.IsEqual(result, E)
+    Assert.deepEqual(result, E)
   })
   it('Should upcast from boolean', () => {
     const value = true
     const result = Value.Cast(T, value)
-    Assert.IsEqual(result, E)
+    Assert.deepEqual(result, E)
   })
   it('Should upcast from object', () => {
     const value = {}
     const result = Value.Cast(T, value)
-    Assert.IsEqual(result, E)
+    Assert.deepEqual(result, E)
   })
   it('Should upcast from array', () => {
     const value = [1]
     const result = Value.Cast(T, value)
-    Assert.IsEqual(result, E)
+    Assert.deepEqual(result, E)
   })
   it('Should upcast from undefined', () => {
     const value = undefined
     const result = Value.Cast(T, value)
-    Assert.IsEqual(result, E)
+    Assert.deepEqual(result, E)
   })
   it('Should upcast from null', () => {
     const value = null
     const result = Value.Cast(T, value)
-    Assert.IsEqual(result, E)
+    Assert.deepEqual(result, E)
   })
   it('Should upcast from date', () => {
     const value = new Date(100)
     const result = Value.Cast(T, value)
-    Assert.IsEqual(result, E)
+    Assert.deepEqual(result, E)
   })
   it('Should preserve', () => {
     const value = {
@@ -60,7 +60,7 @@ describe('value/cast/Recursive', () => {
       ],
     }
     const result = Value.Cast(T, value)
-    Assert.IsEqual(result, value)
+    Assert.deepEqual(result, value)
   })
   it('Should upcast from varying types', () => {
     const TypeA = Type.Recursive((This) =>
@@ -85,7 +85,7 @@ describe('value/cast/Recursive', () => {
       ],
     }
     const ValueB = Value.Cast(TypeB, ValueA)
-    // Assert.isEqual(ValueB, {
+    // Assert.deepEqual(ValueB, {
     //   id: 'A',
     //   name: 'test',
     //   nodes: [

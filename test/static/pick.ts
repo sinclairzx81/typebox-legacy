@@ -12,7 +12,7 @@ import { Type, Static } from '@sinclair/typebox'
 
   type T = Static<typeof T>
 
-  Expect(T).ToStatic<{
+  Expect(T).ToInfer<{
     A: string
     B: string
   }>()
@@ -27,11 +27,11 @@ import { Type, Static } from '@sinclair/typebox'
 
   const keys = ['A', 'B'] as const
 
-  const T = Type.Pick(A, ['A', 'B'])
+  const T = Type.Pick(A, keys)
 
   type T = Static<typeof T>
 
-  Expect(T).ToStatic<{
+  Expect(T).ToInfer<{
     A: string
     B: string
   }>()
@@ -52,7 +52,7 @@ import { Type, Static } from '@sinclair/typebox'
 
   type T = Static<typeof T>
 
-  Expect(T).ToStatic<{
+  Expect(T).ToInfer<{
     A: string
     B: string
   }>()
@@ -69,7 +69,7 @@ import { Type, Static } from '@sinclair/typebox'
   })
   const T = Type.Intersect([Union, Extended])
 
-  Expect(T).ToStatic<
+  Expect(T).ToInfer<
     (
       | {
           type: 'A'
@@ -89,11 +89,11 @@ import { Type, Static } from '@sinclair/typebox'
 
   const K = Type.KeyOf(T)
 
-  Expect(K).ToStatic<'type' | 'x' | 'y' | 'z'>()
+  Expect(K).ToInfer<'type' | 'x' | 'y' | 'z'>()
 
   const P = Type.Pick(T, ['type', 'x'])
 
-  Expect(P).ToStatic<
+  Expect(P).ToInfer<
     (
       | {
           type: 'A'
@@ -111,7 +111,7 @@ import { Type, Static } from '@sinclair/typebox'
 
   const O = Type.Partial(P)
 
-  Expect(O).ToStatic<
+  Expect(O).ToInfer<
     (
       | {
           type?: 'A' | undefined
