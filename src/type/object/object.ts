@@ -63,18 +63,45 @@ type ObjectStatic<T extends TProperties, P extends unknown[]> = ObjectStaticProp
 // ------------------------------------------------------------------
 export type TPropertyKey = string | number // Consider making this PropertyKey
 export type TProperties = Record<TPropertyKey, TSchema>
-// ----------------------------------------------------------------------------
-// Required
-// ----------------------------------------------------------------------------
-/** Creates a RequiredArray derived from the given TProperties value. */
-type TRequiredArray<
-  Properties extends TProperties,
-  RequiredProperties extends TProperties = {
-    [Key in keyof Properties as Properties[Key] extends TOptional<Properties[Key]> ? never : Key]: Properties[Key]
-  },
-  RequiredKeys extends string[] = UnionToTuple<Extract<keyof RequiredProperties, string>>,
-  Result extends string[] | undefined = RequiredKeys extends [] ? undefined : RequiredKeys,
-> = Result
+// ------------------------------------------------------------------
+//
+// TRequiredArray
+//
+// Version 0.34.x: Computes the array of required property keys. If the
+// array is empty `[]` or contains a non-literal string type `[string]`,
+// it falls back to `string[] | undefined`. This fallback allows `TObject`
+// to be used as a generic constraint.
+//
+// Note: Generating the RequiredArray from `TProperties` allows TB 1.0
+// to infer `TObject` via the XSchema inference path. The `string[] |
+// undefined` fallback ensures that `TObject` remains compatible with
+// varying `TObject<X>` instances.
+//
+// ------------------------------------------------------------------
+// prettier-ignore
+type TIsLiteralString<Type extends string> = (
+  [Type] extends [string]
+    ? [string] extends [Type]
+      ? false
+      : true
+    : false
+)
+// prettier-ignore
+type IsRequiredArrayLiteralConstant<RequiredTuple extends string[]> = (
+  RequiredTuple extends [infer Left extends string, ...infer _ extends string[]]
+    ? TIsLiteralString<Left>
+    : false
+)
+// prettier-ignore
+type TRequiredArray<Properties extends TProperties,
+  RequiredProperties extends TProperties = { [Key in keyof Properties as Properties[Key] extends TOptional<Properties[Key]> ? never : Key]: Properties[Key] },
+  RequiredUnion extends string = Extract<keyof RequiredProperties, string>,
+  RequiredTuple extends string[] = UnionToTuple<RequiredUnion>,
+  Result extends string[] | undefined = (
+    IsRequiredArrayLiteralConstant<RequiredTuple> extends true
+     ? RequiredTuple
+     : string[] | undefined
+  )> = Result
 /** Creates a RequiredArray derived from the given TProperties value. */
 function RequiredArray<Properties extends TProperties>(properties: Properties): TRequiredArray<Properties> {
   return globalThis.Object.keys(properties).filter((key) => !IsOptional(properties[key])) as never

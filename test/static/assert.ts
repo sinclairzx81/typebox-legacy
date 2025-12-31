@@ -68,3 +68,29 @@ export function Expect<T extends TSchema>(schema: T) {
     ToStaticEncode() {},
   } as ExpectResult<T>
 }
+// ------------------------------------------------------------------
+// IsNeverExtends
+// ------------------------------------------------------------------
+/** Special case for left-side `never` as given by `(never extends T ? true : false)` */
+export function IsExtendsWhenLeftIsNever<Left extends unknown, Right extends unknown>(_expect: [TExtendsExpect<Left, Right>] extends [true] ? true : false) {}
+
+// ------------------------------------------------------------------
+// IsExtends
+// ------------------------------------------------------------------
+type TExtendsExpect<Left extends unknown, Right extends unknown> = Left extends Right ? true : false
+
+export function IsExtends<Left extends unknown, Right extends unknown>(_expect: TExtendsExpect<Left, Right>) {}
+
+// ------------------------------------------------------------------
+// IsExtendsMutual
+// ------------------------------------------------------------------
+type TExtendsMutualExpect<Left extends unknown, Right extends unknown> = (<T>() => T extends Left ? 1 : 2) extends <T>() => T extends Right ? 1 : 2 ? true : false
+
+export function IsExtendsMutual<Left extends unknown, Right extends unknown>(_expect: TExtendsMutualExpect<Left, Right>) {}
+
+// ------------------------------------------------------------------
+// IsExtendsNever
+// ------------------------------------------------------------------
+type TExtendsNever<Type extends unknown> = [Type] extends [never] ? true : false
+
+export function IsExtendsNever<Type extends unknown>(_expect: TExtendsNever<Type>) {}
