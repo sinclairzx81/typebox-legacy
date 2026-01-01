@@ -67,15 +67,10 @@ export type TProperties = Record<TPropertyKey, TSchema>
 //
 // TRequiredArray
 //
-// Version 0.34.x: Computes the array of required property keys. If the
-// array is empty `[]` or contains a non-literal string type `[string]`,
-// it falls back to `string[] | undefined`. This fallback allows `TObject`
-// to be used as a generic constraint.
-//
-// Note: Generating the RequiredArray from `TProperties` allows TB 1.0
-// to infer `TObject` via the XSchema inference path. The `string[] |
-// undefined` fallback ensures that `TObject` remains compatible with
-// varying `TObject<X>` instances.
+// Note: Generating the RequiredArray from TProperties enables TB 1.0
+// to infer TObject via the XSchema inference path. The string[] |
+// undefined fallback ensures that TObject remains covariant with
+// varying TObject<X> instances.
 //
 // ------------------------------------------------------------------
 // prettier-ignore
