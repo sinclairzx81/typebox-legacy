@@ -64,7 +64,6 @@ type ObjectStatic<T extends TProperties, P extends unknown[]> = ObjectStaticProp
 export type TPropertyKey = string | number // Consider making this PropertyKey
 export type TProperties = Record<TPropertyKey, TSchema>
 // ------------------------------------------------------------------
-//
 // TRequiredArray
 //
 // Note: Generating the RequiredArray from TProperties enables TB 1.0
