@@ -117,8 +117,8 @@ function FromArray(schema: TArray, references: TSchema[], value: any): boolean {
   if (IsDefined<number>(schema.maxItems) && !(value.length <= schema.maxItems)) {
     return false
   }
-  if (!value.every((value) => Visit(schema.items, references, value))) {
-    return false
+  for (const element of value) {
+    if (!Visit(schema.items, references, element)) return false
   }
   // prettier-ignore
   if (schema.uniqueItems === true && !((function() { const set = new Set(); for(const element of value) { const hashed = Hash(element); if(set.has(hashed)) { return false } else { set.add(hashed) } } return true })())) {

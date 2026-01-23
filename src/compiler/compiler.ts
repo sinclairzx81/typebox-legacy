@@ -257,7 +257,8 @@ export namespace TypeCompiler {
     if (IsNumber(schema.maxItems)) yield `${value}.length <= ${schema.maxItems}`
     if (IsNumber(schema.minItems)) yield `${value}.length >= ${schema.minItems}`
     const elementExpression = CreateExpression(schema.items, references, 'value')
-    yield `${value}.every((${parameter}) => ${elementExpression})`
+    // yield `${value}.every((${parameter}) => ${elementExpression})` // issue: 1519
+    yield `((array) => { for(const ${parameter} of array) if(!(${elementExpression})) { return false }; return true; })(${value})`
     if (IsSchema(schema.contains) || IsNumber(schema.minContains) || IsNumber(schema.maxContains)) {
       const containsSchema = IsSchema(schema.contains) ? schema.contains : Never()
       const checkExpression = CreateExpression(containsSchema, references, 'value')
