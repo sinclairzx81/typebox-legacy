@@ -183,4 +183,19 @@ describe('compiler/Array', () => {
       ],
     })
   })
+  // ----------------------------------------------------------------
+  // Issue: https://github.com/sinclairzx81/typebox/issues/1519
+  // ----------------------------------------------------------------
+  it('Should correctly handle sparse arrays 1', () => {
+    const T = Type.Array(Type.String())
+    const V = []
+    V[10] = 'hello'
+    Fail(T, V)
+  })
+  it('Should correctly handle sparse arrays 2', () => {
+    const T = Type.Array(Type.Union([Type.String(), Type.Undefined()]))
+    const V = []
+    V[10] = 'hello'
+    Ok(T, V)
+  })
 })
